@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mala Jaap · Pro Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
+    <style>
+        /* ================================================================
+                   GLASS THEME
+                   ================================================================ */
+        :root {
+            --bg: #f0ebe6;
+            --bg-app: rgba(255, 255, 255, 0.45);
+            --bg-card: rgba(255, 255, 255, 0.50);
+            --bg-card-hover: rgba(255, 255, 255, 0.70);
+            --bg-solid: rgba(255, 255, 255, 0.25);
+            --text: #1e1814;
+            --text-secondary: #5a4c40;
+            --text-muted: #8a7a6a;
+            --border: rgba(255, 255, 255, 0.35);
+            --shadow: 0 12px 48px rgba(0, 0, 0, 0.06);
+            --shadow-sm: 0 2px 16px rgba(0, 0, 0, 0.03);
+            --bead-active: #c4926a;
+            --bead-inactive: #ddd0c4;
+            --bead-glow: rgba(196, 146, 106, 0.18);
+            --accent: #b8865b;
+            --accent-dark: #9a7350;
+            --accent-light: #dbb594;
+            --ring: #d4c5b8;
+            --radius: 28px;
+            --radius-sm: 14px;
+            --font: 'Inter', sans-serif;
+            --blur: 10px;
+            --chart-bar: #c4926a;
+            --chart-bg: rgba(196, 146, 106, 0.08);
+            --success: #5a9a5a;
+            --danger: #c85050;
+            --gold: #f0c060;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .app {
+            width: 100%;
+            max-width: 520px;
+            background: var(--bg-app);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border-radius: var(--radius);
+            padding: 18px 14px 22px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .app::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -30%;
+            width: 160%;
+            height: 160%;
+            background: radial-gradient(circle at 30% 20%, var(--bead-glow), transparent 60%);
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo {
+            font-size: 20px;
+            color: var(--accent);
+            cursor: default;
+        }
+        .app-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            background: var(--bg-solid);
+            backdrop-filter: blur(6px);
+            padding: 4px 12px 4px 10px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+        .header-right i {
+            color: var(--accent);
+            font-size: 13px;
+        }
+        .header-right .day-display {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .header-right .date-sub {
+            font-weight: 400;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* BADGE ROW */
+        .badge-row {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+        .badge-item {
+            background: var(--bg-card);
+            backdrop-filter: blur(6px);
+            border-radius: 30px;
+            padding: 4px 12px 4px 10px;
+            border: 1px solid var(--border);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--shadow-sm);
+        }
+        .badge-item i {
+            font-size: 12px;
+            color: var(--accent);
+        }
+        .badge-item .highlight {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .badge-item .highlight.gold {
+            color: var(--gold);
+        }
+        .badge-item .highlight.green {
+            color: var(--success);
+        }
+
+        /* MANTRA */
+        .mantra-section {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 10px;
+        }
+        .mantra-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            min-height: 56px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .mantra-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .mantra-text {
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+            min-height: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.2px;
+        }
+        .mantra-nav {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 6px;
+        }
+        .mantra-nav-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-solid);
+            backdrop-filter: blur(6px);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+        .mantra-nav-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .mantra-indicators {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 4px;
+        }
+        .mantra-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.25;
+            transition: 0.3s;
+        }
+        .mantra-dot.active {
+            opacity: 1;
+            background: var(--accent);
+            width: 14px;
+            border-radius: 3px;
+        }
+
+        /* MALA WITH PROGRESS RING */
+        .mala-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            margin: 0 0 4px;
+            touch-action: none;
+        }
+        .mala-container {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1/1;
+        }
+        #malaCanvas {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 50%;
+            display: block;
+            touch-action: none;
+            will-change: transform;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        /* Progress ring overlay (SVG) */
+        .progress-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            transform: rotate(-90deg);
+        }
+        .progress-ring .ring-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 3.5;
+        }
+        .progress-ring .ring-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s ease;
+            filter: drop-shadow(0 0 8px var(--bead-glow));
+        }
+        .progress-ring .ring-complete {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 4;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s ease;
+            filter: drop-shadow(0 0 16px rgba(240, 192, 96, 0.35));
+        }
+
+        /* CENTER TEXT — NO PERCENTAGE */
+        .progress-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            text-align: center;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1px;
+            line-height: 1.2;
+        }
+        .progress-center-text .remaining {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            display: block;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+        .progress-center-text .remaining-label {
+            font-size: 8px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
+            margin-top: 1px;
+        }
+        .progress-center-text .target-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        /* STATS ROW */
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+            margin: 4px 0 8px;
+            position: relative;
+            z-index: 2;
+        }
+        .stat-item {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-sm);
+            padding: 6px 4px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-item .label {
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: block;
+        }
+        .stat-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+            font-variant-numeric: tabular-nums;
+        }
+        .stat-item .value .suffix {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-left: 1px;
+        }
+        .stat-item .value.timer {
+            font-size: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        /* CONTROLS */
+        .controls {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 7px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: var(--bg-solid);
+            backdrop-filter: blur(6px);
+            color: var(--text-secondary);
+            font-family: var(--font);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: var(--shadow-sm);
+            user-select: none;
+            min-width: 32px;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            background: var(--bg-card-hover);
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .btn-accent:hover {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+        }
+        .btn-outline {
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: var(--bg-card);
+        }
+        .btn-danger {
+            border-color: rgba(200, 80, 80, 0.15);
+            color: var(--danger);
+        }
+        .btn-danger:hover {
+            background: rgba(200, 80, 80, 0.06);
+        }
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 10px;
+        }
+
+        /* STATS DASHBOARD */
+        .stats-dashboard {
+            margin-top: 12px;
+            position: relative;
+            z-index: 2;
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            padding: 12px 12px 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        .stats-dashboard .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stats-dashboard .section-title i {
+            color: var(--accent);
+        }
+
+        .today-chart .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .today-chart .bar-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            min-width: 60px;
+            max-width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+        }
+        .today-chart .bar-track {
+            flex: 1;
+            height: 14px;
+            background: var(--chart-bg);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .today-chart .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, var(--bead-active), var(--accent));
+            transition: width 0.5s ease;
+            min-width: 2px;
+        }
+        .today-chart .bar-count {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text);
+            min-width: 30px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .today-chart .empty-msg {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 6px 0;
+        }
+
+        .week-chart {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+        .week-chart .week-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 50px;
+            gap: 3px;
+            padding: 2px 0;
+        }
+        .week-chart .week-bar-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+        .week-chart .week-bar {
+            width: 100%;
+            max-width: 24px;
+            border-radius: 4px 4px 0 0;
+            background: linear-gradient(180deg, var(--accent), var(--bead-active));
+            transition: height 0.5s ease;
+            min-height: 2px;
+        }
+        .week-chart .week-day-label {
+            font-size: 6px;
+            color: var(--text-muted);
+            text-align: center;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .week-chart .week-empty {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .total-stats {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 10px;
+        }
+        .total-stats .total-item {
+            font-size: 10px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .total-stats .total-item .badge {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+        .total-stats .total-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid var(--border);
+            font-size: 9px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 2;
+        }
+        .footer .total-rounds {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-weight: 500;
+        }
+        .footer .total-rounds i {
+            color: var(--accent);
+        }
+        .completion-badge {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 8px 2px 6px;
+            border-radius: 30px;
+            background: rgba(212, 163, 115, 0.10);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 9px;
+            border: 1px solid rgba(212, 163, 115, 0.10);
+            animation: glow-pulse 2s infinite;
+        }
+        .completion-badge.show {
+            display: inline-flex;
+        }
+        @keyframes glow-pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 4px rgba(212, 163, 115, 0.05);
+            }
+            50% {
+                box-shadow: 0 0 14px rgba(212, 163, 115, 0.15);
+            }
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.40);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--bg-app);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            max-width: 380px;
+            width: 100%;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .modal-box p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .modal-box .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+        .modal-box .modal-actions .btn {
+            min-width: 60px;
+        }
+        .modal-box input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-solid);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            font-family: var(--font);
+            margin-bottom: 12px;
+            outline: none;
+        }
+        .modal-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--bead-glow);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .app {
+                padding: 12px 10px 16px;
+                border-radius: 22px;
+            }
+            .header-right {
+                font-size: 11px;
+                padding: 3px 8px 3px 6px;
+            }
+            .mantra-text {
+                font-size: 16px;
+            }
+            .stat-item .value {
+                font-size: 17px;
+            }
+            .stat-item .value.timer {
+                font-size: 14px;
+            }
+            .btn {
+                padding: 5px 10px;
+                font-size: 10px;
+                min-width: 28px;
+            }
+            .mala-container {
+                max-width: 280px;
+            }
+            .badge-item {
+                font-size: 10px;
+                padding: 3px 8px 3px 6px;
+            }
+            .badge-item .highlight {
+                font-size: 11px;
+            }
+            .today-chart .bar-label {
+                font-size: 9px;
+                min-width: 45px;
+                max-width: 55px;
+            }
+            .today-chart .bar-count {
+                font-size: 9px;
+                min-width: 24px;
+            }
+            .today-chart .bar-track {
+                height: 12px;
+            }
+            .week-chart .week-bars {
+                height: 40px;
+            }
+            .stats-dashboard {
+                padding: 8px 8px 6px;
+            }
+            .progress-center-text .remaining {
+                font-size: 18px;
+            }
+            .progress-center-text .target-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .mala-container {
+                max-width: 220px;
+            }
+            .mantra-text {
+                font-size: 14px;
+            }
+            .header-right {
+                font-size: 10px;
+                padding: 2px 6px 2px 5px;
+            }
+            .stats-row {
+                gap: 3px;
+            }
+            .stat-item .value {
+                font-size: 14px;
+            }
+            .stat-item .value.timer {
+                font-size: 12px;
+            }
+            .btn {
+                padding: 4px 8px;
+                font-size: 9px;
+                min-width: 24px;
+            }
+            .badge-item {
+                font-size: 9px;
+                padding: 2px 6px 2px 5px;
+            }
+            .progress-center-text .remaining {
+                font-size: 15px;
+            }
+            .progress-center-text .target-label {
+                font-size: 9px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .ripple {
+            display: none;
+        }
+
+        /* Celebration confetti */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9998;
+            overflow: hidden;
+        }
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-20px) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app" id="app">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <span class="logo">🕉️</span>
+                <span class="app-name">Mala Jaap</span>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="day-display" id="dayDisplay">Monday</span>
+                <span class="date-sub" id="dateSub">06 Jul</span>
+            </div>
+        </header>
+
+        <!-- BADGE ROW -->
+        <div class="badge-row">
+            <div class="badge-item">
+                <i class="fas fa-fire"></i>
+                Streak: <span class="highlight gold" id="streakDisplay">0</span> days
+            </div>
+            <div class="badge-item">
+                <i class="fas fa-bullseye"></i>
+                Target: <span class="highlight" id="targetDisplay">108</span>/day
+            </div>
+            <div class="badge-item" id="todayTotalBadge">
+                <i class="fas fa-check-circle"></i>
+                Today: <span class="highlight green" id="todayTotalDisplay">0</span>
+            </div>
+        </div>
+
+        <!-- MANTRA -->
+        <section class="mantra-section">
+            <div class="mantra-box">
+                <span class="mantra-label">• current mantra •</span>
+                <div class="mantra-text" id="mantraText">Om Hanumate Namah</div>
+            </div>
+            <div class="mantra-nav">
+                <button class="mantra-nav-btn" id="prevMantra"><i class="fas fa-chevron-left"></i></button>
+                <button class="mantra-nav-btn" id="nextMantra"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="mantra-indicators" id="mantraIndicators">
+                <span class="mantra-dot active"></span>
+                <span class="mantra-dot"></span>
+                <span class="mantra-dot"></span>
+            </div>
+        </section>
+
+        <!-- MALA with Progress Ring (NO PERCENTAGE) -->
+        <div class="mala-wrapper">
+            <div class="mala-container">
+                <canvas id="malaCanvas" width="600" height="600"></canvas>
+                <!-- SVG Progress Ring -->
+                <svg class="progress-ring" viewBox="0 0 120 120" id="progressRing">
+                    <circle class="ring-bg" cx="60" cy="60" r="52" />
+                    <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="52"
+                    stroke-dasharray="326.7" stroke-dashoffset="326.7" />
+                    <circle class="ring-complete" id="ringComplete" cx="60" cy="60" r="48"
+                    stroke-dasharray="301.6" stroke-dashoffset="301.6" opacity="0" />
+                </svg>
+                <!-- CENTER TEXT — NO PERCENTAGE -->
+                <div class="progress-center-text">
+                    <span class="remaining" id="remainingDisplay">108</span>
+                    <span class="remaining-label">left</span>
+                    <span class="target-label" id="targetLabel">Target: 108</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="label">Jaap</span>
+                <span class="value" id="counterDisplay">0 <span class="suffix">/108</span></span>
+            </div>
+            <div class="stat-item">
+                <span class="label">Timer</span>
+                <span class="value timer" id="timerDisplay">00:00</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">Rounds</span>
+                <span class="value" id="roundsDisplay">0</span>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls">
+            <button class="btn btn-outline btn-danger" id="resetBtn"><i class="fas fa-undo"></i> Reset</button>
+            <button class="btn btn-accent" id="completeBtn"><i class="fas fa-check"></i> Complete</button>
+            <button class="btn btn-outline" id="timerToggleBtn">
+                <i class="fas fa-play" id="timerIcon"></i> <span id="timerLabel">Start</span>
+            </button>
+            <button class="btn btn-outline btn-sm" id="targetBtn" title="Set daily target">
+                <i class="fas fa-bullseye"></i> Target
+            </button>
+        </div>
+
+        <!-- STATS DASHBOARD -->
+        <div class="stats-dashboard" id="statsDashboard">
+            <div class="today-chart">
+                <div class="section-title"><i class="fas fa-chart-bar"></i> Today's Jaap</div>
+                <div id="todayChartContainer">
+                    <div class="empty-msg">Start chanting to see today's stats ✨</div>
+                </div>
+            </div>
+
+            <div class="week-chart">
+                <div class="section-title"><i class="fas fa-calendar-week"></i> Last 7 Days</div>
+                <div id="weekChartContainer">
+                    <div class="week-empty">No data yet</div>
+                </div>
+            </div>
+
+            <div class="total-stats" id="totalStatsContainer">
+                <div class="total-item"><span class="badge"></span> Total: <strong id="totalAll">0</strong></div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <span class="total-rounds"><i class="fas fa-circle"></i> Total: <span id="totalJaapsDisplay">0</span></span>
+            <span class="completion-badge" id="completionBadge"><i class="fas fa-check-circle"></i> Round Complete 🕉️</span>
+            <span>⏱️ <span id="sessionTimeDisplay">00:00</span></span>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <h3 id="modalTitle">Set Daily Target</h3>
+            <p id="modalDesc">Enter your daily jaap target (minimum 1):</p>
+            <input type="number" id="modalInput" value="108" min="1" max="100000" />
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="modalCancel">Cancel</button>
+                <button class="btn btn-accent" id="modalConfirm">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  MALA JAAP — Pro Edition
+        //  FIX: % removed from center, wheel locks to target
+        // ================================================================
+
+        (function() {
+            'use strict';
+
+            // ---- DOM refs ----
+            const canvas = document.getElementById('malaCanvas');
+            const ctx = canvas.getContext('2d');
+            const counterDisplay = document.getElementById('counterDisplay');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const roundsDisplay = document.getElementById('roundsDisplay');
+            const totalJaapsDisplay = document.getElementById('totalJaapsDisplay');
+            const sessionTimeDisplay = document.getElementById('sessionTimeDisplay');
+            const completionBadge = document.getElementById('completionBadge');
+            const mantraText = document.getElementById('mantraText');
+            const mantraIndicators = document.getElementById('mantraIndicators');
+            const prevMantraBtn = document.getElementById('prevMantra');
+            const nextMantraBtn = document.getElementById('nextMantra');
+            const resetBtn = document.getElementById('resetBtn');
+            const completeBtn = document.getElementById('completeBtn');
+            const timerToggleBtn = document.getElementById('timerToggleBtn');
+            const timerIcon = document.getElementById('timerIcon');
+            const timerLabel = document.getElementById('timerLabel');
+            const dayDisplay = document.getElementById('dayDisplay');
+            const dateSub = document.getElementById('dateSub');
+            const todayChartContainer = document.getElementById('todayChartContainer');
+            const weekChartContainer = document.getElementById('weekChartContainer');
+            const totalStatsContainer = document.getElementById('totalStatsContainer');
+            const streakDisplay = document.getElementById('streakDisplay');
+            const targetDisplay = document.getElementById('targetDisplay');
+            const todayTotalDisplay = document.getElementById('todayTotalDisplay');
+            const remainingDisplay = document.getElementById('remainingDisplay');
+            const targetLabel = document.getElementById('targetLabel');
+            const ringFill = document.getElementById('ringFill');
+            const ringComplete = document.getElementById('ringComplete');
+            const targetBtn = document.getElementById('targetBtn');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalInput = document.getElementById('modalInput');
+            const modalCancel = document.getElementById('modalCancel');
+            const modalConfirm = document.getElementById('modalConfirm');
+
+            // ---- CONSTANTS ----
+            const MANTRA_LIST = [
+                'Om Hanumate Namah',
+                'Shree Ram Jai Ram Jai Jai Ram',
+                'Om Brim Brihaspataye Namah'
+            ];
+            const STORAGE_KEY = 'mala_jaap_data_v3';
+            const SESSION_KEY = 'mala_session_v3';
+            const SETTINGS_KEY = 'mala_settings_v3';
+
+            // ---- STATE ----
+            let count = 0;
+            let totalJaaps = 0;
+            let rounds = 0;
+            let timerSeconds = 0;
+            let timerInterval = null;
+            let isTimerRunning = false;
+            let currentMantraIndex = 0;
+            let inactivityTimer = null;
+            const INACTIVITY_DELAY = 3000;
+            let dailyTarget = 108;
+            let streak = 0;
+            let TOTAL_BEADS = 108; // dynamic
+
+            // ---- DATABASE ----
+            let db = {};
+            let session = { date: '', mantra: '', count: 0 };
+
+            // ---- HELPERS ----
+            function getToday() {
+                const d = new Date();
+                return d.getFullYear() + '-' +
+                    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(d.getDate()).padStart(2, '0');
+            }
+
+            function getDateStr(dateObj) {
+                return dateObj.getFullYear() + '-' +
+                    String(dateObj.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(dateObj.getDate()).padStart(2, '0');
+            }
+
+            function getDayName(dateStr) {
+                const parts = dateStr.split('-');
+                const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d.getDay()];
+            }
+
+            function getShortDayName(dateStr) {
+                const parts = dateStr.split('-');
+                const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getDay()];
+            }
+
+            function getFormattedDate(dateStr) {
+                const parts = dateStr.split('-');
+                const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d
+                .getMonth()];
+                return String(d.getDate()).padStart(2, '0') + ' ' + month;
+            }
+
+            function getTodayTotal() {
+                const data = getTodayData();
+                let total = 0;
+                MANTRA_LIST.forEach(m => total += (data[m] || 0));
+                return total;
+            }
+
+            // ---- LOAD/SAVE ----
+            function loadDB() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    db = raw ? JSON.parse(raw) : {};
+                } catch (_) { db = {}; }
+            }
+
+            function saveDB() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+                } catch (_) {}
+            }
+
+            function loadSession() {
+                try {
+                    const raw = localStorage.getItem(SESSION_KEY);
+                    if (raw) {
+                        const s = JSON.parse(raw);
+                        session = s;
+                        if (session.date !== getToday()) {
+                            session = { date: getToday(), mantra: MANTRA_LIST[0], count: 0 };
+                        }
+                        if (!MANTRA_LIST.includes(session.mantra)) {
+                            session.mantra = MANTRA_LIST[0];
+                        }
+                    } else {
+                        session = { date: getToday(), mantra: MANTRA_LIST[0], count: 0 };
+                    }
+                } catch (_) {
+                    session = { date: getToday(), mantra: MANTRA_LIST[0], count: 0 };
+                }
+            }
+
+            function saveSession() {
+                try {
+                    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+                } catch (_) {}
+            }
+
+            function loadSettings() {
+                try {
+                    const raw = localStorage.getItem(SETTINGS_KEY);
+                    if (raw) {
+                        const s = JSON.parse(raw);
+                        dailyTarget = s.target || 108;
+                    }
+                } catch (_) { dailyTarget = 108; }
+                TOTAL_BEADS = dailyTarget;
+            }
+
+            function saveSettings() {
+                try {
+                    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ target: dailyTarget }));
+                } catch (_) {}
+            }
+
+            // ---- STREAK ----
+            function calculateStreak() {
+                const today = getToday();
+                let streakCount = 0;
+                const dates = Object.keys(db).sort();
+                if (dates.length === 0) return 0;
+
+                const todayData = db[today] || {};
+                let todayTotal = 0;
+                MANTRA_LIST.forEach(m => todayTotal += (todayData[m] || 0));
+
+                let checkDate = today;
+                if (todayTotal === 0) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - 1);
+                    checkDate = getDateStr(d);
+                }
+
+                let current = new Date(checkDate);
+                while (true) {
+                    const key = getDateStr(current);
+                    const dayData = db[key] || {};
+                    let total = 0;
+                    MANTRA_LIST.forEach(m => total += (dayData[m] || 0));
+                    if (total > 0) {
+                        streakCount++;
+                        current.setDate(current.getDate() - 1);
+                    } else {
+                        break;
+                    }
+                }
+                return streakCount;
+            }
+
+            // ---- SAVE TO DB ----
+            function saveToDB(mantra, jaapCount) {
+                if (jaapCount <= 0) return;
+                const today = getToday();
+                if (!db[today]) db[today] = {};
+                MANTRA_LIST.forEach(m => { if (!db[today][m]) db[today][m] = 0; });
+                db[today][mantra] = (db[today][mantra] || 0) + jaapCount;
+                saveDB();
+                renderStats();
+                updateBadges();
+                updateProgressRing();
+            }
+
+            // ---- GET TODAY DATA ----
+            function getTodayData() {
+                const today = getToday();
+                if (!db[today]) {
+                    const obj = {};
+                    MANTRA_LIST.forEach(m => obj[m] = 0);
+                    return obj;
+                }
+                const data = db[today];
+                MANTRA_LIST.forEach(m => { if (!data[m]) data[m] = 0; });
+                return data;
+            }
+
+            // ---- GET LAST 7 DAYS ----
+            function getLast7Days() {
+                const result = [];
+                const today = new Date();
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date(today);
+                    d.setDate(d.getDate() - i);
+                    const key = getDateStr(d);
+                    const dayData = db[key] || {};
+                    let total = 0;
+                    MANTRA_LIST.forEach(m => { total += (dayData[m] || 0); });
+                    result.push({ date: key, total, dayName: getShortDayName(key) });
+                }
+                return result;
+            }
+
+            // ---- GET TOTAL PER MANTRA ----
+            function getTotalPerMantra() {
+                const totals = {};
+                MANTRA_LIST.forEach(m => totals[m] = 0);
+                Object.keys(db).forEach(date => {
+                    const day = db[date];
+                    MANTRA_LIST.forEach(m => {
+                        totals[m] += (day[m] || 0);
+                    });
+                });
+                return totals;
+            }
+
+            // ---- UPDATE BADGES ----
+            function updateBadges() {
+                const todayTotal = getTodayTotal();
+                todayTotalDisplay.textContent = todayTotal;
+                targetDisplay.textContent = dailyTarget;
+                streak = calculateStreak();
+                streakDisplay.textContent = streak;
+
+                const targetMet = todayTotal >= dailyTarget;
+                const targetEl = document.querySelector('.badge-item .highlight');
+                if (targetMet && todayTotal > 0) {
+                    targetEl.style.color = 'var(--success)';
+                } else if (todayTotal > 0) {
+                    targetEl.style.color = 'var(--gold)';
+                } else {
+                    targetEl.style.color = '';
+                }
+                targetLabel.textContent = 'Target: ' + dailyTarget;
+                // Update counter suffix
+                counterDisplay.innerHTML = `${count} <span class="suffix">/${TOTAL_BEADS}</span>`;
+            }
+
+            // ---- UPDATE PROGRESS RING (NO PERCENTAGE) ----
+            function updateProgressRing() {
+                const todayTotal = getTodayTotal();
+                const target = dailyTarget;
+                let pct = target > 0 ? Math.min(100, (todayTotal / target) * 100) : 0;
+                const remaining = Math.max(0, target - todayTotal);
+                remainingDisplay.textContent = remaining;
+
+                const circumference = 2 * Math.PI * 52;
+                const offset = circumference - (pct / 100) * circumference;
+                ringFill.style.strokeDashoffset = offset;
+
+                if (pct >= 100 && todayTotal > 0) {
+                    ringComplete.style.opacity = '1';
+                    ringComplete.style.strokeDashoffset = '0';
+                } else {
+                    ringComplete.style.opacity = '0';
+                    ringComplete.style.strokeDashoffset = '301.6';
+                }
+            }
+
+            // ---- RENDER STATS ----
+            function renderStats() {
+                const todayData = getTodayData();
+                const maxToday = Math.max(1, ...Object.values(todayData));
+                let html = '';
+                let hasData = false;
+                MANTRA_LIST.forEach(m => {
+                    const val = todayData[m] || 0;
+                    if (val > 0) hasData = true;
+                    const pct = maxToday > 0 ? (val / maxToday) * 100 : 0;
+                    html += `
+                        <div class="bar-row">
+                            <span class="bar-label" title="${m}">${m}</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width:${Math.max(pct, 2)}%;"></div>
+                            </div>
+                            <span class="bar-count">${val}</span>
+                        </div>
+                    `;
+                });
+                todayChartContainer.innerHTML = hasData ? html :
+                    `<div class="empty-msg">Start chanting to see today's stats ✨</div>`;
+
+                const weekData = getLast7Days();
+                const maxWeek = Math.max(1, ...weekData.map(d => d.total));
+                let weekHtml = `<div class="week-bars">`;
+                weekData.forEach(day => {
+                    const pct = maxWeek > 0 ? (day.total / maxWeek) * 100 : 0;
+                    weekHtml += `
+                        <div class="week-bar-wrap">
+                            <div class="week-bar" style="height:${Math.max(pct, 2)}%;"></div>
+                            <span class="week-day-label">${day.dayName}</span>
+                        </div>
+                    `;
+                });
+                weekHtml += `</div>`;
+                weekChartContainer.innerHTML = weekData.every(d => d.total === 0) ?
+                    `<div class="week-empty">No data yet</div>` : weekHtml;
+
+                const totals = getTotalPerMantra();
+                let totalAll = 0;
+                let totalHtml = '';
+                const colors = ['#c4926a', '#b8865b', '#d4a373'];
+                MANTRA_LIST.forEach((m, idx) => {
+                    const val = totals[m] || 0;
+                    totalAll += val;
+                    totalHtml += `
+                        <span class="total-item">
+                            <span class="badge" style="background:${colors[idx % colors.length]};"></span>
+                            ${m}: <strong>${val}</strong>
+                        </span>
+                    `;
+                });
+                totalStatsContainer.innerHTML = `
+                    ${totalHtml}
+                    <span class="total-item" style="font-weight:600;color:var(--text);">
+                        <i class="fas fa-total"></i> Grand Total: <strong>${totalAll}</strong>
+                    </span>
+                `;
+                totalJaapsDisplay.textContent = totalAll;
+
+                updateBadges();
+                updateProgressRing();
+            }
+
+            // ---- CANVAS DRAW (DYNAMIC BEADS) ----
+            function resizeCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                const size = Math.floor(rect.width || 340);
+                canvas.width = size * 2;
+                canvas.height = size * 2;
+                canvas.style.width = size + 'px';
+                canvas.style.height = size + 'px';
+                drawMala();
+            }
+
+            function drawMala() {
+                const w = canvas.width,
+                    h = canvas.height;
+                const size = Math.min(w, h);
+                const cx = w / 2,
+                    cy = h / 2;
+                const radius = size * 0.38;
+                const beadRadius = size * 0.044;
+                const style = getComputedStyle(document.documentElement);
+                const activeColor = style.getPropertyValue('--bead-active').trim() || '#c4926a';
+                const inactiveColor = style.getPropertyValue('--bead-inactive').trim() || '#ddd0c4';
+                const glowColor = style.getPropertyValue('--bead-glow').trim() || 'rgba(196,146,106,0.15)';
+                const ringColor = style.getPropertyValue('--ring').trim() || '#d4c5b8';
+                const textColor = style.getPropertyValue('--text').trim() || '#1e1814';
+
+                ctx.clearRect(0, 0, w, h);
+
+                const grad = ctx.createRadialGradient(cx, cy, radius * 0.5, cx, cy, radius * 1.1);
+                grad.addColorStop(0, 'transparent');
+                grad.addColorStop(0.7, 'transparent');
+                grad.addColorStop(1, glowColor);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius * 1.1, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius + beadRadius * 1.4, 0, Math.PI * 2);
+                ctx.strokeStyle = ringColor;
+                ctx.lineWidth = size * 0.008;
+                ctx.globalAlpha = 0.2;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+
+                // ---- DYNAMIC BEADS = TARGET ----
+                const totalBeads = Math.max(1, TOTAL_BEADS);
+                const displayCount = Math.min(count, totalBeads);
+
+                for (let i = 0; i < totalBeads; i++) {
+                    const angle = (i / totalBeads) * Math.PI * 2 - Math.PI / 2;
+                    const x = cx + radius * Math.cos(angle);
+                    const y = cy + radius * Math.sin(angle);
+                    const isActive = i < displayCount;
+                    const color = isActive ? activeColor : inactiveColor;
+                    const r = isActive ? beadRadius * 1.1 : beadRadius;
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+
+                    if (isActive) {
+                        const hl = ctx.createRadialGradient(x - r * 0.25, y - r * 0.25, 0, x, y, r);
+                        hl.addColorStop(0, 'rgba(255,255,255,0.25)');
+                        hl.addColorStop(1, 'rgba(255,255,255,0)');
+                        ctx.beginPath();
+                        ctx.arc(x, y, r, 0, Math.PI * 2);
+                        ctx.fillStyle = hl;
+                        ctx.fill();
+                    }
+                }
+
+                const centerR = size * 0.05;
+                ctx.beginPath();
+                ctx.arc(cx, cy, centerR, 0, Math.PI * 2);
+                ctx.fillStyle = activeColor;
+                ctx.globalAlpha = 0.15;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.beginPath();
+                ctx.arc(cx, cy, centerR * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = activeColor;
+                ctx.globalAlpha = 0.5;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+
+                ctx.fillStyle = textColor;
+                ctx.font = `600 ${size * 0.045}px Inter, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(displayCount, cx, cy + size * 0.002);
+
+                if (displayCount >= totalBeads && totalBeads > 0) {
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, radius + beadRadius * 1.8, 0, Math.PI * 2);
+                    ctx.strokeStyle = activeColor;
+                    ctx.lineWidth = size * 0.005;
+                    ctx.globalAlpha = 0.4;
+                    ctx.setLineDash([size * 0.015, size * 0.02]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.globalAlpha = 1;
+                }
+
+                counterDisplay.innerHTML = `${displayCount} <span class="suffix">/${totalBeads}</span>`;
+                roundsDisplay.textContent = rounds;
+                if (displayCount >= totalBeads && totalBeads > 0) completionBadge.classList.add('show');
+                else completionBadge.classList.remove('show');
+            }
+
+            // ---- MANTRA ----
+            function updateMantra(index) {
+                currentMantraIndex = (index + MANTRA_LIST.length) % MANTRA_LIST.length;
+                mantraText.textContent = MANTRA_LIST[currentMantraIndex];
+                const dots = mantraIndicators.querySelectorAll('.mantra-dot');
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentMantraIndex));
+                session.mantra = MANTRA_LIST[currentMantraIndex];
+                saveSession();
+            }
+
+            // ---- TIMER ----
+            function formatTime(sec) {
+                const m = String(Math.floor(sec / 60)).padStart(2, '0');
+                const s = String(sec % 60).padStart(2, '0');
+                return m + ':' + s;
+            }
+
+            function updateTimerDisplay() {
+                timerDisplay.textContent = formatTime(timerSeconds);
+                sessionTimeDisplay.textContent = formatTime(timerSeconds);
+            }
+
+            function timerTick() {
+                timerSeconds++;
+                updateTimerDisplay();
+            }
+
+            function startTimer() {
+                if (isTimerRunning) return;
+                isTimerRunning = true;
+                timerInterval = setInterval(timerTick, 1000);
+                timerIcon.className = 'fas fa-pause';
+                timerLabel.textContent = 'Pause';
+            }
+
+            function pauseTimer() {
+                if (!isTimerRunning) return;
+                isTimerRunning = false;
+                clearInterval(timerInterval);
+                timerInterval = null;
+                timerIcon.className = 'fas fa-play';
+                timerLabel.textContent = 'Resume';
+            }
+
+            function toggleTimer() { isTimerRunning ? pauseTimer() : startTimer(); }
+
+            function resetTimer() {
+                pauseTimer();
+                timerSeconds = 0;
+                updateTimerDisplay();
+                timerIcon.className = 'fas fa-play';
+                timerLabel.textContent = 'Start';
+            }
+
+            timerToggleBtn.addEventListener('click', toggleTimer);
+
+            function handleTimerAuto() {
+                if (!isTimerRunning && count > 0) startTimer();
+                clearTimeout(inactivityTimer);
+                if (isTimerRunning) {
+                    inactivityTimer = setTimeout(() => {
+                        if (count > 0 && isTimerRunning) {
+                            pauseTimer();
+                            timerIcon.className = 'fas fa-play';
+                            timerLabel.textContent = 'Resume';
+                        }
+                    }, INACTIVITY_DELAY);
+                }
+            }
+
+            // ---- COUNTER (LOCKED TO TARGET) ----
+            function updateCount(newCount) {
+                const totalBeads = Math.max(1, TOTAL_BEADS);
+                let val = Math.max(0, Math.min(totalBeads, newCount));
+
+                if (val >= totalBeads && count < totalBeads) {
+                    const mantra = MANTRA_LIST[currentMantraIndex];
+                    saveToDB(mantra, totalBeads);
+                    totalJaaps += 1;
+                    rounds += 1;
+                    count = 0;
+                    drawMala();
+                    saveState();
+                    handleTimerAuto();
+                    session.count = 0;
+                    session.date = getToday();
+                    saveSession();
+                    completionBadge.classList.add('show');
+                    setTimeout(() => {
+                        if (count !== totalBeads) completionBadge.classList.remove('show');
+                    }, 2000);
+                    launchConfetti();
+                    return;
+                }
+                count = val;
+                session.count = count;
+                session.date = getToday();
+                session.mantra = MANTRA_LIST[currentMantraIndex];
+                saveSession();
+                drawMala();
+                saveState();
+                handleTimerAuto();
+                updateProgressRing();
+                updateBadges();
+                if (count === 0 && isTimerRunning) {
+                    pauseTimer();
+                    timerIcon.className = 'fas fa-play';
+                    timerLabel.textContent = 'Start';
+                }
+            }
+
+            function increment(amount) {
+                const totalBeads = Math.max(1, TOTAL_BEADS);
+                if (count >= totalBeads) count = 0;
+                updateCount(count + amount);
+            }
+
+            function decrement(amount) {
+                if (count === 0) return;
+                updateCount(count - amount);
+            }
+
+            // ---- COMPLETE ----
+            function completeRound() {
+                if (count === 0) {
+                    alert('You haven\'t started any jaap yet!');
+                    return;
+                }
+                const mantra = MANTRA_LIST[currentMantraIndex];
+                const jaapToSave = count;
+                saveToDB(mantra, jaapToSave);
+                totalJaaps += 1;
+                rounds += 1;
+                count = 0;
+                session.count = 0;
+                session.date = getToday();
+                saveSession();
+                drawMala();
+                saveState();
+                handleTimerAuto();
+                completionBadge.classList.add('show');
+                setTimeout(() => {
+                    if (count !== TOTAL_BEADS) completionBadge.classList.remove('show');
+                }, 2000);
+                launchConfetti();
+                alert(`✅ Saved ${jaapToSave} jaaps of "${mantra}" to today's record!`);
+            }
+
+            // ---- RESET ----
+            function resetAll() {
+                if (count === 0 && totalJaaps === 0 && timerSeconds === 0) return;
+                if (!confirm('Reset all counters & timer?')) return;
+                count = 0;
+                totalJaaps = 0;
+                rounds = 0;
+                session.count = 0;
+                session.date = getToday();
+                saveSession();
+                resetTimer();
+                drawMala();
+                saveState();
+                completionBadge.classList.remove('show');
+                updateProgressRing();
+                updateBadges();
+            }
+
+            // ---- SAVE STATE ----
+            function saveState() {
+                saveSession();
+                try {
+                    localStorage.setItem('mala_counters', JSON.stringify({
+                        count,
+                        totalJaaps,
+                        rounds,
+                        timerSeconds,
+                        mantraIndex: currentMantraIndex
+                    }));
+                } catch (_) {}
+            }
+
+            function loadCounters() {
+                try {
+                    const raw = localStorage.getItem('mala_counters');
+                    if (raw) {
+                        const data = JSON.parse(raw);
+                        count = Math.min(TOTAL_BEADS, Math.max(0, data.count || 0));
+                        totalJaaps = data.totalJaaps || 0;
+                        rounds = data.rounds || 0;
+                        timerSeconds = data.timerSeconds || 0;
+                        currentMantraIndex = data.mantraIndex || 0;
+                        session.count = count;
+                        session.mantra = MANTRA_LIST[currentMantraIndex];
+                        session.date = getToday();
+                        saveSession();
+                    }
+                } catch (_) {}
+            }
+
+            // ---- CANVAS INTERACTION ----
+            function handleTap(clientX, clientY) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const mx = (clientX - rect.left) * scaleX;
+                const my = (clientY - rect.top) * scaleY;
+                const cx = canvas.width / 2,
+                    cy = canvas.height / 2;
+                const size = Math.min(canvas.width, canvas.height);
+                const radius = size * 0.38;
+                const beadRadius = size * 0.044;
+                const dist = Math.sqrt((mx - cx) ** 2 + (my - cy) ** 2);
+
+                if (dist < radius * 0.15) {
+                    resetAll();
+                    return;
+                }
+                if (dist < radius + beadRadius * 3.5) {
+                    increment(1);
+                }
+            }
+
+            canvas.addEventListener('click', (e) => handleTap(e.clientX, e.clientY));
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                handleTap(touch.clientX, touch.clientY);
+            }, { passive: false });
+
+            // ---- KEYBOARD ----
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                if (e.key === 'ArrowRight' || e.key === '=' || e.key === '+') { e.preventDefault();
+                    increment(1); } else if (e.key === 'ArrowLeft' || e.key === '-') { e.preventDefault();
+                    decrement(1); } else if (e.key === 'r' || e.key === 'R') { e.preventDefault();
+                    resetAll(); } else if (e.key === ' ') { e.preventDefault();
+                    toggleTimer(); } else if (e.key === 'ArrowUp') { e.preventDefault();
+                    increment(5); } else if (e.key === 'ArrowDown') { e.preventDefault();
+                    decrement(5); } else if (e.key === 'c' || e.key === 'C') { e.preventDefault();
+                    completeRound(); } else if (e.key === 'n' || e.key === 'N') { e.preventDefault();
+                    nextMantra(); } else if (e.key === 'p' || e.key === 'P') { e.preventDefault();
+                    prevMantra(); }
+            });
+
+            // ---- DAY DISPLAY ----
+            function updateDayDisplay() {
+                const now = new Date();
+                const dateStr = getDateStr(now);
+                dayDisplay.textContent = getDayName(dateStr);
+                dateSub.textContent = getFormattedDate(dateStr);
+            }
+
+            // ---- MANTRA NAV ----
+            prevMantraBtn.addEventListener('click', () => {
+                const newIdx = (currentMantraIndex - 1 + MANTRA_LIST.length) % MANTRA_LIST.length;
+                updateMantra(newIdx);
+                session.mantra = MANTRA_LIST[newIdx];
+                saveSession();
+            });
+            nextMantraBtn.addEventListener('click', () => {
+                const newIdx = (currentMantraIndex + 1) % MANTRA_LIST.length;
+                updateMantra(newIdx);
+                session.mantra = MANTRA_LIST[newIdx];
+                saveSession();
+            });
+
+            // ---- TARGET MODAL ----
+            function openTargetModal() {
+                modalTitle.textContent = 'Set Daily Target';
+                modalDesc.textContent = 'Enter your daily jaap target (minimum 1):';
+                modalInput.value = dailyTarget;
+                modalInput.min = 1;
+                modalInput.max = 100000;
+                modalOverlay.classList.add('active');
+                setTimeout(() => modalInput.focus(), 100);
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+            }
+
+            targetBtn.addEventListener('click', openTargetModal);
+            modalCancel.addEventListener('click', closeModal);
+            modalConfirm.addEventListener('click', () => {
+                const val = parseInt(modalInput.value);
+                if (isNaN(val) || val < 1) {
+                    alert('Please enter a valid number (minimum 1)');
+                    return;
+                }
+                dailyTarget = val;
+                TOTAL_BEADS = val;
+                saveSettings();
+                // Reset count if it exceeds new target
+                if (count > TOTAL_BEADS) {
+                    count = TOTAL_BEADS;
+                    session.count = count;
+                    saveSession();
+                }
+                closeModal();
+                updateBadges();
+                updateProgressRing();
+                drawMala();
+                renderStats();
+            });
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeModal();
+            });
+            modalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') modalConfirm.click();
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // ---- CONFETTI ----
+            function launchConfetti() {
+                const container = document.createElement('div');
+                container.className = 'celebration';
+                document.body.appendChild(container);
+                const colors = ['#c4926a', '#f0c060', '#5a9a5a', '#c85050', '#5b9bb5', '#e8b86d'];
+                for (let i = 0; i < 70; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'confetti';
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    el.style.width = (4 + Math.random() * 6) + 'px';
+                    el.style.height = (4 + Math.random() * 6) + 'px';
+                    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+                    el.style.animationDelay = (Math.random() * 0.8) + 's';
+                    container.appendChild(el);
+                }
+                setTimeout(() => container.remove(), 4000);
+            }
+
+            // ---- BUTTONS ----
+            resetBtn.addEventListener('click', resetAll);
+            completeBtn.addEventListener('click', completeRound);
+
+            // ---- RESIZE ----
+            let resizeTO;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTO);
+                resizeTO = setTimeout(resizeCanvas, 120);
+            });
+
+            // ---- INIT ----
+            loadDB();
+            loadSettings();
+            loadSession();
+            loadCounters();
+
+            if (session.date !== getToday()) {
+                session.date = getToday();
+                session.count = 0;
+                saveSession();
+                count = 0;
+            }
+            const sessionMantraIdx = MANTRA_LIST.indexOf(session.mantra);
+            if (sessionMantraIdx >= 0) currentMantraIndex = sessionMantraIdx;
+            count = session.count || 0;
+            // Ensure count doesn't exceed target
+            if (count > TOTAL_BEADS) {
+                count = TOTAL_BEADS;
+                session.count = count;
+                saveSession();
+            }
+
+            updateMantra(currentMantraIndex);
+            resizeCanvas();
+            updateTimerDisplay();
+            drawMala();
+            renderStats();
+            updateDayDisplay();
+            updateBadges();
+            updateProgressRing();
+
+            setInterval(updateDayDisplay, 60000);
+            setInterval(saveDB, 10000);
+
+            console.log('🕉️ Mala Jaap — % removed, wheel locked to target');
+        })();
+    </script>
+</body>
+</html>
