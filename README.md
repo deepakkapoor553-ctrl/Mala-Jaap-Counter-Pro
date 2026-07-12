@@ -6,7 +6,7 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 
 ---
 
-## ✨ Features
+## ✨ Features 
 
 ### 🎯 Dynamic Mala Wheel
 - Beads automatically adjust to your **daily target** (set 51, 108, 500, or any number)
