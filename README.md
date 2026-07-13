@@ -156,7 +156,8 @@ mala-jaap-pro/
 
 ## 📸 Screenshot
 
-> *Add a screenshot here:*
+<img width="277" height="472" alt="image" src="https://github.com/user-attachments/assets/21bf5ad4-527a-4998-9a4c-3df0c64c3d6c" />
+
 
 ```html
 ![Mala Jaap Pro Tracker](screenshot.png)
