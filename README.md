@@ -130,13 +130,6 @@ All data is stored in your browser's `localStorage` under these keys:
 3. Look for the keys above
 
 ---
-mala-jaap-pro/
-├── index.html (Single file — everything included)
-├── README.md (This file)
-└── .gitignore (Git ignore rules)
-
-
----
 
 ## 🔧 How to Run Locally
 
@@ -178,3 +171,7 @@ mala-jaap-pro/
 **Aapka README ab professional aur complete hai!** 🎉🕉️
 
 ## 📁 Project Structure
+mala-jaap-pro/
+├── index.html (Single file — everything included)
+├── README.md (This file)
+└── .gitignore (Git ignore rules)
