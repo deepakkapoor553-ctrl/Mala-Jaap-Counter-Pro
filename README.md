@@ -137,6 +137,8 @@ mala-jaap-pro/
 ├── README.md (This file)
 └── .gitignore (Git ignore rules)
 
+---
+
 ## 🔧 How to Run Locally
 
 1. Download or clone this repository
