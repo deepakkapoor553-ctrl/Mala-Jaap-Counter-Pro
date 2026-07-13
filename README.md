@@ -131,6 +131,12 @@ All data is stored in your browser's `localStorage` under these keys:
 
 ---
 
+## 📁 Project Structure
+mala-jaap-pro/
+├── index.html (Single file — everything included)
+├── README.md (This file)
+└── .gitignore (Git ignore rules)
+
 ## 🔧 How to Run Locally
 
 1. Download or clone this repository
@@ -151,27 +157,4 @@ All data is stored in your browser's `localStorage` under these keys:
 
 <img width="277" height="472" alt="image" src="https://github.com/user-attachments/assets/21bf5ad4-527a-4998-9a4c-3df0c64c3d6c" />
 
-
-
 ---
-
-## 📋 Instructions
-
-1. **Copy** the entire content above
-2. Go to your GitHub repository: `https://github.com/deepakkapoor553-ctrl/Mala-Jaap-Counter-Pro`
-3. Click on **README.md** file
-4. Click **Edit** (pencil icon)
-5. **Paste** the new content
-6. Click **Commit changes**
-7. Write a commit message (e.g., "Update README with complete documentation")
-8. Click **Commit changes**
-
----
-
-**Aapka README ab professional aur complete hai!** 🎉🕉️
-
-## 📁 Project Structure
-mala-jaap-pro/
-├── index.html (Single file — everything included)
-├── README.md (This file)
-└── .gitignore (Git ignore rules)
