@@ -2,17 +2,17 @@
 
 A modern, feature-rich digital mala (prayer beads) counter for mindful mantra chanting. Track your daily progress, set goals, and visualize your practice with a stunning glass-morphism UI — all without any server or internet dependency. **100% private — data stored locally in your browser.**
 
-![Mala Jaap Pro Tracker](https://img.shields.io/badge/version-3.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Made with](https://img.shields.io/badge/made%20with-HTML%2FCSS%2FJS-orange)
+![Version](https://img.shields.io/badge/version-3.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Made with](https://img.shields.io/badge/made%20with-HTML%2FCSS%2FJS-orange) ![Platform](https://img.shields.io/badge/platform-Web-lightgrey)
 
 ---
 
-## ✨ Features 
+## ✨ Features
 
 ### 🎯 Dynamic Mala Wheel
 - Beads automatically adjust to your **daily target** (set 51, 108, 500, or any number)
 - Tap anywhere on the wheel to add +1 jaap
 - Visual feedback with active/inactive beads
-- **Center shows current count** (not remaining) — increases with each tap
+- **Center shows current count** (increases with each tap)
 
 ### 📊 Smart Progress Ring
 - Circular gauge showing **real-time progress** toward daily target
@@ -28,7 +28,7 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 - **Auto-starts** on first tap
 - **Auto-pauses** after 3 seconds of inactivity
 - Manual start/pause with button or `Space` key
-- Session time shown in real-time
+- **Resets automatically** when a round completes
 
 ### 🕉️ Multiple Mantras
 - 3 pre-loaded mantras:
@@ -39,7 +39,7 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 - Each mantra's count tracked separately
 
 ### 📈 Today's Stats (Bar Chart)
-- Mantra-wise breakdown for today
+- **Only shows mantras you've chanted today** (count > 0)
 - Visual bars for quick comparison
 - Instantly see which mantra you've chanted most
 
@@ -56,7 +56,7 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 ### ✅ Complete Button
 - Saves current count (even if less than target)
 - Automatically records data for today
-- Starts a new round instantly
+- **Timer resets** on completion for accurate per-round tracking
 
 ### 🎉 Confetti Celebration
 - Burst of confetti when you complete a round or hit target
@@ -67,6 +67,11 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 - No server, no tracking, no internet required
 - Data survives browser restarts
 - Auto-saves every 10 seconds
+
+### 📱 Fully Responsive
+- Optimized for both mobile and desktop
+- Smooth glass-morphism UI
+- Touch-friendly controls
 
 ### ⌨️ Keyboard Shortcuts
 | Key | Action |
@@ -88,7 +93,7 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 | Technology | Purpose |
 |------------|---------|
 | **HTML5** | Structure |
-| **CSS3** | Glass-morphism styling with dark/light themes support |
+| **CSS3** | Glass-morphism styling with responsive design |
 | **Vanilla JavaScript** | Logic, Canvas rendering, Charts |
 | **Canvas API** | Mala wheel rendering |
 | **localStorage** | Data persistence (no server needed) |
@@ -103,7 +108,7 @@ A modern, feature-rich digital mala (prayer beads) counter for mindful mantra ch
 2. **Tap the Mala** — Tap anywhere on the wheel to add +1 jaap
 3. **Switch Mantra** — Use arrow buttons or `N`/`P` keys
 4. **Complete Round** — Click "Complete" to save current count (even if less than target)
-5. **Timer** — Auto-starts on first tap, pauses after inactivity
+5. **Timer** — Auto-starts on first tap, pauses after inactivity, resets on completion
 6. **Track Progress** — See real-time updates on ring, charts, and badges
 
 ---
@@ -125,8 +130,6 @@ All data is stored in your browser's `localStorage` under these keys:
 3. Look for the keys above
 
 ---
-
-## 📁 Project Structure
 mala-jaap-pro/
 ├── index.html (Single file — everything included)
 ├── README.md (This file)
@@ -151,36 +154,11 @@ mala-jaap-pro/
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshot
 
-> *Add a screenshot here: `![Screenshot](screenshot.png)`*
+> *Add a screenshot here:*
 
----
+```html
+![Mala Jaap Pro Tracker](screenshot.png)
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/deepakkapoor553-ctrl/Mala-Jaap-Counter-Pro/issues).
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-MIT License — Free to use, modify, and distribute.
-
----
-
-## 🙏 Credits
-
-- **Font Awesome** for icons
-- **Google Fonts (Inter)** for typography
-- Inspired by daily mantra practice
-
----
-
-**Om Shanti** 🕉️
+## 📁 Project Structure
