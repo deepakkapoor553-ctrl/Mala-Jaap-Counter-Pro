@@ -153,7 +153,7 @@ mala-jaap-pro/
 
 [https://deepakkapoor553-ctrl.github.io/Mala-Jaap-Counter-Pro/](https://deepakkapoor553-ctrl.github.io/Mala-Jaap-Counter-Pro/)
 
----
+
 
 ## 📸 Screenshot
 
