@@ -159,7 +159,22 @@ mala-jaap-pro/
 <img width="277" height="472" alt="image" src="https://github.com/user-attachments/assets/21bf5ad4-527a-4998-9a4c-3df0c64c3d6c" />
 
 
-```html
-![Mala Jaap Pro Tracker](screenshot.png)
+
+---
+
+## 📋 Instructions
+
+1. **Copy** the entire content above
+2. Go to your GitHub repository: `https://github.com/deepakkapoor553-ctrl/Mala-Jaap-Counter-Pro`
+3. Click on **README.md** file
+4. Click **Edit** (pencil icon)
+5. **Paste** the new content
+6. Click **Commit changes**
+7. Write a commit message (e.g., "Update README with complete documentation")
+8. Click **Commit changes**
+
+---
+
+**Aapka README ab professional aur complete hai!** 🎉🕉️
 
 ## 📁 Project Structure
